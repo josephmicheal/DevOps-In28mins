@@ -1,0 +1,50 @@
+#deployment.yaml
+apiVersion: apps/v1         # version of the api we consume
+kind: ReplicaSet            # this configuration is for deployment
+metadata:     
+  labels:
+    app: hello-world-rest-api
+  name: hello-world-rest-api
+  namespace: default
+spec:
+  replicas: 3               # no of pods should run for above deployment
+  selector:
+    matchLabels:
+      app: hello-world-rest-api
+  #strategy:
+  #  rollingUpdate:
+  #    maxSurge: 25%         # the maximum number of pods that can be created over the desired number of pods
+  #    maxUnavailable: 25%   # the maximum number of pods that can be unavailable during the update process
+  #  type: RollingUpdate     # old pods will be killed, and new pods will be created automatically
+  template:
+    metadata:
+      labels:
+        app: hello-world-rest-api
+    spec:
+      containers:
+      - image: in28min/hello-world-rest-api:0.0.2.RELEASE
+        imagePullPolicy: IfNotPresent
+        name: hello-world-rest-api
+      restartPolicy: Always     #container to be killed and restarted if a probe fails, 
+                                #then specify a liveness probe, and specify a restartPolicy of Always or OnFailure.
+                                # When should you use a readiness probe?
+      terminationGracePeriodSeconds: 30 # give sometime to do all the rituals before dying
+---
+#service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-world-rest-api
+  name: hello-world-rest-api
+  namespace: default
+spec:
+  ports:
+  - nodePort: 32177
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: hello-world-rest-api # this is mapping to the pod name
+  sessionAffinity: None       # if we want to map all the reqeust of particular session to same pod
+  type: LoadBalancer
