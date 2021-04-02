@@ -1,0 +1,3 @@
+K8 > no details of SECRET which is very important
+terraform is declarative poor explaination
+what is iam user, before creating that you have to explain
