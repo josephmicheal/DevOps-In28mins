@@ -13,12 +13,13 @@ provider "aws" {
   # VERSION IS NOT NEEDED HERE
 }
 
-variable "names" {
-  default = ["Joseph","Kingston", "Leo"]
+variable "users" {
+  default = [
+     "Joseph", "Kingston", "Leo"]
 }
 
 
 resource "aws_iam_user" "my_iam_users" {
-  count = length(var.names)
-  name  = var.names[count.index]
+  for_each = toset(var.names)
+  name     = each.value
 }

@@ -1,0 +1,33 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] aws_default_vpc.default (expand)" [label = "aws_default_vpc.default", shape = "box"]
+		"[root] aws_instance.http_server (expand)" [label = "aws_instance.http_server", shape = "box"]
+		"[root] aws_security_group.http_server_sg (expand)" [label = "aws_security_group.http_server_sg", shape = "box"]
+		"[root] data.aws_ami.aws_linux_2_latest (expand)" [label = "data.aws_ami.aws_linux_2_latest", shape = "box"]
+		"[root] data.aws_ami_ids.aws_linux_2_latest_ids (expand)" [label = "data.aws_ami_ids.aws_linux_2_latest_ids", shape = "box"]
+		"[root] data.aws_subnet_ids.default_subnets (expand)" [label = "data.aws_subnet_ids.default_subnets", shape = "box"]
+		"[root] output.http_server_public_dns" [label = "output.http_server_public_dns", shape = "note"]
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"]" [label = "provider[\"registry.terraform.io/hashicorp/aws\"]", shape = "diamond"]
+		"[root] var.aws_key_pair" [label = "var.aws_key_pair", shape = "note"]
+		"[root] aws_default_vpc.default (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] aws_instance.http_server (expand)" -> "[root] aws_security_group.http_server_sg (expand)"
+		"[root] aws_instance.http_server (expand)" -> "[root] data.aws_ami.aws_linux_2_latest (expand)"
+		"[root] aws_instance.http_server (expand)" -> "[root] data.aws_subnet_ids.default_subnets (expand)"
+		"[root] aws_instance.http_server (expand)" -> "[root] provisioner.remote-exec"
+		"[root] aws_instance.http_server (expand)" -> "[root] var.aws_key_pair"
+		"[root] aws_security_group.http_server_sg (expand)" -> "[root] aws_default_vpc.default (expand)"
+		"[root] data.aws_ami.aws_linux_2_latest (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_ami_ids.aws_linux_2_latest_ids (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"]"
+		"[root] data.aws_subnet_ids.default_subnets (expand)" -> "[root] aws_default_vpc.default (expand)"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] data.aws_ami_ids.aws_linux_2_latest_ids (expand)"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.http_server_public_dns"
+		"[root] output.http_server_public_dns" -> "[root] aws_instance.http_server (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] aws_instance.http_server (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)" -> "[root] data.aws_ami_ids.aws_linux_2_latest_ids (expand)"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/aws\"] (close)"
+	}
+}
+
