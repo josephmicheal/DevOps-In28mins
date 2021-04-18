@@ -3,3 +3,4 @@ terraform is declarative poor explaination
 what is iam user, before creating that you have to explain
 new terraform project means terraform init has to be done , what it will do dont know
 92. Step 14 - Recovering from Errors with Terraform > Half cooked information about recovery
+step 115 lots of confusion related to envs
